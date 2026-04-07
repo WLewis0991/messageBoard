@@ -1,19 +1,22 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pool from "./db";
+import pool from './db.js';
+
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Test route
-app.get("/api/users", async (req, res) => {
+app.get("/api/messages", async (req, res) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM users");
-    res.json(rows);
+    const result = await pool.query("SELECT * FROM messages ORDER BY created_at DESC");
+    res.json(result.rows); // must be an array
   } catch (err) {
-    res.status(500).json({ error: "Database error" });
+    console.error("DB query error:", err);
+    res.json([]); // return empty array so React doesn’t crash
   }
 });
 

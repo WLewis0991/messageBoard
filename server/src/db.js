@@ -1,6 +1,7 @@
-import { Pool } from "pg";
 import dotenv from "dotenv";
-dotenv.config();
+import { Pool } from "pg";
+
+dotenv.config({ path: '../.env' }); // relative to src/
 
 const pool = new Pool({
   host: process.env.DB_HOST,
