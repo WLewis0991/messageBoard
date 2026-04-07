@@ -1,0 +1,32 @@
+# Node modules (installed packages)
+node_modules/
+
+# Environment variables (sensitive info)
+.env
+.env.*            # optional if you have multiple env files
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Optional build directories
+dist/
+build/
+
+# Database files (if you accidentally have local files)
+*.sqlite
+*.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Optional coverage reports (if you use testing)
+coverage/
