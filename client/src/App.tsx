@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-interface User {
+interface Messages {
   id: number;
   name: string;
   message: string;
@@ -25,7 +25,7 @@ useEffect(() => {
 
   return (
     <div>
-      <h4>Hi</h4>
+      <h4>Hidd</h4>
       <h1>Messages</h1>
       {messages.map((mess) => (
         <p key={mess.id}>{mess.name} — {mess.message}</p>

@@ -13,10 +13,11 @@ app.use(express.json());
 app.get("/api/messages", async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM messages ORDER BY created_at DESC");
-    res.json(result.rows); // must be an array
+    console.log("Sending messages to frontend:", result.rows); // debug
+    res.json(result.rows);
   } catch (err) {
     console.error("DB query error:", err);
-    res.json([]); // return empty array so React doesn’t crash
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
