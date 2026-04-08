@@ -1,0 +1,81 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+  color: #1a1a2e;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 { font-size: 2rem; }
+header p { color: #666; margin-top: 0.25rem; }
+
+h2 { font-size: 1.2rem; margin-bottom: 1rem; color: #444; }
+
+.new-post {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+form { display: flex; flex-direction: column; gap: 0.75rem; }
+
+input, textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus { border-color: #4f46e5; }
+
+button {
+  padding: 0.75rem;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover:not(:disabled) { background: #4338ca; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.post-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.post-card h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+.post-card p { color: #555; line-height: 1.6; }
+
+.status { color: #666; text-align: center; padding: 1rem; }
+.error { color: #dc2626; }

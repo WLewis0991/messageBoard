@@ -1,37 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
+import type { messages } from './types'
+import MessageCard from './components/MessageCard'
+import './App.css'
 
-interface Messages {
-  id: number;
-  name: string;
-  message: string;
-}
 
 function App() {
-  const [messages, setMessages] = useState<Messages[]>([]);
+  const [messages, setMessages] = useState<messages[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
-useEffect(() => {
-  fetch("http://localhost:5000/api/messages")
-    .then((res) => res.json())
-    .then((data) => {
-      if (!Array.isArray(data)) {
-        console.error("Expected array, got:", data);
-        setMessages([]); // fallback
-      } else {
-        setMessages(data);
-      }
-    })
-    .catch((err) => console.error("Fetch error:", err));
-}, []);
+  const fetchMessages = async (): Promise<void> => {
+    try {
+      const res = await fetch('/api/messages')
+      if (!res.ok) throw new Error('Failed to fetch messages')
+      const data: messages[] = await res.json()
+      setMessages(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchMessages()
+  }, [])
 
   return (
-    <div>
-      <h4>Hidd</h4>
-      <h1>Messages</h1>
-      {messages.map((mess) => (
-        <p key={mess.id}>{mess.name} — {mess.message}</p>
-      ))}
+    <div className="app">
+      <header>
+        <h1>📋 MessageBoard</h1>
+        <p>A place to share thoughts and ask questions</p>
+      </header>
+
+      <section className="posts">
+        <h2>All Posts</h2>
+        {loading && <p className="status">Loading posts...</p>}
+        {error && <p className="status error">Error: {error}</p>}
+        {!loading && messages.length === 0 && (
+          <p className="status">No messages yet. Be the first!</p>
+        )}
+        {messages.map((message: messages) => (
+          <MessageCard key={message.id} messages={message} />
+        ))}
+      </section>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
