@@ -13,7 +13,7 @@ const handleSubmit = () => {
   if (!name.trim() || !message.trim()) return
   const newName = name.trim().length > 20 ? name.trim().slice(0, 20) + '...' : name.trim()
 
-  onSubmit({ name: newName, message }) // ← use newName here
+  onSubmit({ name: newName, message }) 
   onClose()
 }
   return (
