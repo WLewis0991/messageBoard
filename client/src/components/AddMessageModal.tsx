@@ -21,7 +21,7 @@ function AddMessageModal({ onClose, onSubmit }: AddMessageModalProps) {
 
         <input
           type="text"
-          placeholder="Title"
+          placeholder="Name"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
