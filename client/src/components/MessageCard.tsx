@@ -1,7 +1,7 @@
-import type { messages } from "../types";
+import type { Message } from "../types";
 
 interface MessageCardProps {
-    messages: messages
+    messages: Message
 }
 
 function MessageCard({messages}: MessageCardProps){

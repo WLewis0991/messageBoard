@@ -1,13 +1,13 @@
 import { Router, Request, Response } from 'express';
 import pool from '../db';
-import { messages, CreateMessagesBody } from '../types';
+import { Message, CreateMessagesBody } from '../types';
 
 const router = Router();
 
 // GET all messages
 router.get('/', async (_req: Request, res: Response) => {
   try {
-    const result = await pool.query<messages>(
+    const result = await pool.query<Message>(
       'SELECT * FROM messages ORDER BY created_at DESC'
     );
     res.json(result.rows);
@@ -27,8 +27,8 @@ router.post('/', async (req: Request<{}, {}, CreateMessagesBody>, res: Response)
   }
 
   try {
-    const result = await pool.query<messages>(
-      'INSERT INTO messages (name, message, like) VALUES ($1, $2, $3) RETURNING *',
+    const result = await pool.query<Message>(
+      'INSERT INTO messages (name, message, likes) VALUES ($1, $2, $3) RETURNING *',
       [name, message, 0]
     );
     res.status(201).json(result.rows[0]);

@@ -2,34 +2,38 @@ import { useState } from 'react'
 
 interface AddMessageModalProps {
   onClose: () => void;
-  onSubmit: (message: { title: string; body: string }) => void;
+  onSubmit: (message: { name: string; message: string }) => void;
 }
 
 function AddMessageModal({ onClose, onSubmit }: AddMessageModalProps) {
-  const [title, setTitle] = useState<string>('')
-  const [body, setBody] = useState<string>('')
+  const [name, setName] = useState<string>('')
+  const [message, setMessage] = useState<string>('')
 
-  const handleSubmit = () => {
-    if (!title.trim() || !body.trim()) return
-    onSubmit({ title, body })
-  }
+const handleSubmit = () => {
+  if (!name.trim() || !message.trim()) return
+  const newName = name.trim().length > 20 ? name.trim().slice(0, 20) + '...' : name.trim()
 
+  onSubmit({ name: newName, message }) // ← use newName here
+  onClose()
+}
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <h2>New Message</h2>
 
         <input
+          id='nameInput'
           type="text"
           placeholder="Name"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <textarea
+          id='messageInput'
           placeholder="Write your message..."
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
 
         <div className="modal-buttons">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { messages } from './types'
+import type { Message } from './types'
 import Header from './components/Header'
 import AddMessageModal from './components/AddMessageModal'
 import MessageCard from './components/MessageCard'
@@ -7,7 +7,7 @@ import './App.css'
 
 
 function App() {
-  const [messages, setMessages] = useState<messages[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [showModal, setShowModal] = useState<boolean>(false)
@@ -16,7 +16,7 @@ function App() {
     try {
       const res = await fetch('/api/messages')
       if (!res.ok) throw new Error('Failed to fetch messages')
-      const data: messages[] = await res.json()
+      const data: Message[] = await res.json()
       setMessages(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
@@ -25,7 +25,7 @@ function App() {
     }
   }
 
-    const handleAddMessage = async (newMessage: { title: string; body: string }): Promise<void> => {
+  const handleAddMessage = async (newMessage: { name: string; message: string }): Promise<void> => {
     try {
       const res = await fetch('/api/messages', {
         method: 'POST',
@@ -63,7 +63,7 @@ function App() {
         {!loading && messages.length === 0 && (
           <p className="status">No messages yet. Be the first!</p>
         )}
-        {messages.map((message: messages) => (
+        {messages.map((message: Message) => (
           <MessageCard key={message.id} messages={message} />
         ))}
       </section>
