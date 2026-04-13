@@ -5,6 +5,7 @@ import AddMessageModal from './components/AddMessageModal'
 import MessageCard from './components/MessageCard'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -14,7 +15,7 @@ function App() {
 
   const fetchMessages = async (): Promise<void> => {
     try {
-      const res = await fetch('/api/messages')
+      const res = await fetch(`${API_URL}/api/messages`)
       if (!res.ok) throw new Error('Failed to fetch messages')
       const data: Message[] = await res.json()
       setMessages(data)
@@ -27,13 +28,13 @@ function App() {
 
   const handleAddMessage = async (newMessage: { name: string; message: string }): Promise<void> => {
     try {
-      const res = await fetch('/api/messages', {
+      const res = await fetch(`${API_URL}/api/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newMessage),
       })
       if (!res.ok) throw new Error('Failed to add message')
-      await fetchMessages() // refresh the list
+      await fetchMessages()
       setShowModal(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error')
